@@ -4,7 +4,9 @@ import AxiosConfig from "../../AxiosConfig/AxiosConfig";
 
 export const getUserByName = createAsyncThunk("user/fetchUser", async (arg) => {
   try {
-    const result = await AxiosConfig.get(`/users/${arg.userName}`);
+    const result = await AxiosConfig.get(
+      `search/users?q=${arg.userName}+in:user`
+    );
     return {
       success: true,
       status: result.status,
@@ -41,6 +43,7 @@ const userSlice = createSlice({
   initialState: {
     loading: true,
     gitUser: null,
+    userProfile: {},
     userRepos: [],
     userFollowers: [],
     userFollowing: [],
@@ -48,6 +51,9 @@ const userSlice = createSlice({
   reducers: {
     userInfoRepo: (state, action) => {
       state.userRepos = action.payload;
+    },
+    userInfoProfile: (state, action) => {
+      state.userProfile = action.payload;
     },
     userInfoFollowers: (state, action) => {
       state.userFollowers = action.payload;
@@ -59,8 +65,12 @@ const userSlice = createSlice({
   extraReducers: {
     [getUserByName.fulfilled]: (state, action) => {
       if (action.payload?.success) {
-        state.gitUser = action.payload.response;
-        state.loading = false;
+        if (action.payload.response?.total_count === 0) {
+          state.gitUser = undefined;
+        } else {
+          state.gitUser = action.payload.response;
+          state.loading = false;
+        }
       } else if (action.payload?.status === 404) {
         state.gitUser = undefined;
       } else {
@@ -70,8 +80,12 @@ const userSlice = createSlice({
   },
 });
 
-export const { userInfoRepo, userInfoFollowers, userInfoFollowing } =
-  userSlice.actions;
+export const {
+  userInfoProfile,
+  userInfoRepo,
+  userInfoFollowers,
+  userInfoFollowing,
+} = userSlice.actions;
 
 export default userSlice.reducer;
 

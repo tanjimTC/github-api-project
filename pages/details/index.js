@@ -6,7 +6,8 @@ const Index = () => {
   const { gitUser } = useSelector(userSelector);
   return (
     <div>
-      <div className="bg-gray-100 bg-opacity-30">
+      <h1>hahhahah</h1>
+      {/* <div className="bg-gray-100 bg-opacity-30">
         <div className="lg:w-8/12 lg:mx-auto mb-8">
           <div className="flex flex-wrap items-center p-4 md:py-8">
             <div className="md:w-3/12 md:ml-16">
@@ -71,7 +72,7 @@ const Index = () => {
           </div>
           {gitUser && <TabContainer {...gitUser} />}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
