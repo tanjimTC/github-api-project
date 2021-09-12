@@ -1,4 +1,3 @@
-import UserCard from "../components/Cards/UserCard";
 import SearchBarPage from "../components/SubPages/SearchBarPage";
 import { useSelector } from "react-redux";
 import { userSelector } from "../redux/slices/userSlice";

@@ -4,9 +4,7 @@ import AxiosConfig from "../../AxiosConfig/AxiosConfig";
 
 export const getUserByName = createAsyncThunk("user/fetchUser", async (arg) => {
   try {
-    const result = await AxiosConfig.get(
-      `search/users?q=${arg.userName}+in:user`
-    );
+    const result = await AxiosConfig.get(`search/users?q=${arg}+in:user`);
     return {
       success: true,
       status: result.status,
@@ -15,8 +13,8 @@ export const getUserByName = createAsyncThunk("user/fetchUser", async (arg) => {
   } catch (error) {
     return {
       success: false,
-      status: error.response.status,
-      response: error.response.data,
+      status: error?.response?.status,
+      response: error?.response?.data,
     };
   }
 });
@@ -32,8 +30,25 @@ export const getUserInfo = async (url) => {
   } catch (error) {
     return {
       success: false,
-      status: error.response.status,
-      response: error.response.data,
+      status: error?.response?.status,
+      response: error?.response?.data,
+    };
+  }
+};
+
+export const getUserInfobyName = async (login) => {
+  try {
+    const result = await AxiosConfig.get(`search/users?q=${login}+in:user`);
+    return {
+      success: true,
+      status: result.status,
+      response: result.data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      status: error?.response?.status,
+      response: error?.response?.data,
     };
   }
 };
