@@ -13,7 +13,7 @@ const SearchBarPage = () => {
   const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
-    const res = await dispatch(getUserByName(data));
+    const res = await dispatch(getUserByName(data?.userName));
   };
   return (
     <div className="flex ">
